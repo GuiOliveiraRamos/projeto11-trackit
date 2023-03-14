@@ -22,7 +22,7 @@ export default function Cadastro() {
 }
 
 const RegisterPage = styled.div`
-  width: 380px;
+  width: 375px;
   padding-top: 106px;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@ const RegisterPage = styled.div`
     padding: 10px;
     width: 303px;
     height: 25px;
-    margin-bottom: 6px;
+    padding-bottom: 6px;
     border: 1px solid #d5d5d5;
     border-radius: 5px;
 

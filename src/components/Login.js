@@ -18,7 +18,7 @@ export default function Login() {
 }
 
 const LoginPage = styled.div`
-  width: 380px;
+  width: 375px;
   padding-top: 106px;
   display: flex;
   flex-direction: column;
