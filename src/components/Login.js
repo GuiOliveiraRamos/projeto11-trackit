@@ -1,18 +1,51 @@
 import Group8 from "./assets/Group8.png";
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const fazerLogin = (e) => {
+    e.preventDefault();
+    const salvarDados = {
+      userEmail: email,
+      userPassword: password,
+    };
+    const request = axios.post(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+      { email, password }
+    );
+    request.then(() => navigate("/habitos", { state: { dados: salvarDados } }));
+  };
+
   return (
     <LoginPage>
       <img src={Group8} alt="logo" />
-      <form>
+      <form onSubmit={fazerLogin}>
         <label htmlFor="email" />
-        <input type="email" placeholder="email" />
+        <input
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <label htmlFor="senha" />
-        <input type="senha" placeholder="senha" />
+        <input
+          type="password"
+          placeholder="senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Entrar</button>
       </form>
-      <p>Não tem uma conta? Cadastre-se!</p>
+      <Link to="/cadastro">
+        <p>Não tem uma conta? Cadastre-se!</p>
+      </Link>
     </LoginPage>
   );
 }
@@ -79,5 +112,6 @@ const LoginPage = styled.div`
     text-align: center;
     text-decoration-line: underline;
     color: #52b6ff;
+    margin-top: 19px;
   }
 `;

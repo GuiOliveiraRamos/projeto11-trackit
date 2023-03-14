@@ -1,22 +1,68 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Group8 from "./assets/Group8.png";
+import axios from "axios";
 
 export default function Cadastro() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const navigate = useNavigate();
+
+  const fazerCadastro = (e) => {
+    e.preventDefault();
+    const salvarDados = {
+      userEmail: email,
+      userName: name,
+      userPassword: password,
+      userImage: image,
+    };
+    const request = axios.post(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+      { email, name, image, password }
+    );
+    request.then(() => navigate("/", { state: { dados: salvarDados } }));
+  };
+
   return (
     <RegisterPage>
       <img src={Group8} alt="logo" />
-      <form>
+      <form onSubmit={fazerCadastro}>
         <label htmlFor="email" />
-        <input type="email" placeholder="email" />
+        <input
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <label htmlFor="senha" />
-        <input type="senha" placeholder="senha" />
+        <input
+          type="password"
+          placeholder="senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <label htmlFor="nome" />
-        <input type="nome" placeholder="nome" />
+        <input
+          type="name"
+          placeholder="nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
         <label htmlFor="foto" />
-        <input type="foto" placeholder="foto" />
+        <input
+          type="foto"
+          placeholder="foto"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+        />
         <button type="submit">Cadastrar</button>
       </form>
-      <p>Já tem uma conta? Faça login!</p>
+      <Link to="/">
+        <p>Já tem uma conta? Faça login!</p>
+      </Link>
     </RegisterPage>
   );
 }
@@ -45,7 +91,7 @@ const RegisterPage = styled.div`
     padding: 10px;
     width: 303px;
     height: 25px;
-    padding-bottom: 6px;
+    margin-bottom: 6px;
     border: 1px solid #d5d5d5;
     border-radius: 5px;
 
@@ -83,5 +129,6 @@ const RegisterPage = styled.div`
     text-align: center;
     text-decoration-line: underline;
     color: #52b6ff;
+    margin-top: 19px;
   }
 `;
