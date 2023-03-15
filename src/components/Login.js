@@ -23,7 +23,7 @@ export default function Login() {
       { email, password }
     );
     request.then(() => navigate("/habitos", { state: { dados: salvarDados } }));
-    request.catch((r) => alert(r.data.message));
+    request.catch(() => window.location.reload(alert("Login ou senha inválidos")));
   };
 
   return (

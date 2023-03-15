@@ -1,20 +1,42 @@
 import styled from "styled-components";
-import { AiFillPlusSquare } from "react-icons/ai";
 import Header from "../application/Header";
 import Footer from "../application/Footer";
-import HabitosList from "../application/HabitosList"
+import {BsFillCheckSquareFill} from "react-icons/bs"
+import { useState } from "react";
+import HabitosList from "../application/HabitosList";
 
 export default function ApplicationToday() {
+
+  const [showList, setShowList] = useState(false);
+
+  const mostrarLista = () => {
+
+   setShowList(!showList)
+
+  }
 
   return (
     <Body>
       <Header />
       <ContentTitle>
-        <p>Meus hábitos</p>
-        <Icon />          
+        <h2>Segunda, 17/05</h2>
+        <h3>Nenhum hábito concluido ainda</h3>
       </ContentTitle>
-      <HabitosList />
-      <Footer />
+      <HabitosLista>
+        <Title>
+          <div>
+          <h2>Hábito numero 1</h2>
+          <h3>
+            Sequência atual: 3 dias
+            <br />
+            Seu recorde: 5 dias
+          </h3>
+          </div>
+          <Icon/>
+        </Title>
+      </HabitosLista>
+      {showList && <HabitosList />}
+      <Footer mostrarLista={mostrarLista}/>
     </Body>
   );
 }
@@ -26,7 +48,6 @@ const Body = styled.body`
   flex-direction: column;
   align-items: center;
   background-color: #e5e5e5;
-  
 `;
 
 const ContentTitle = styled.div`
@@ -34,9 +55,9 @@ const ContentTitle = styled.div`
   padding: 107px 18px 28px 18px;
   background-color: #e5e5e5;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 
-  p {
+  h2 {
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;
@@ -44,11 +65,67 @@ const ContentTitle = styled.div`
     line-height: 29px;
     color: #126ba5;
   }
+
+  h3 {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #bababa;
+  }
 `;
 
-const Icon = styled(AiFillPlusSquare)`
-  width: 40px;
-  height: 35px;
-  color: #52b6ff;
-  border-radius: 4.63636px;
+const Title = styled.div`
+  width: 340px;
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19.976px;
+    line-height: 25px;
+    margin-bottom: 7px;
+    color: #666666;
+  }
+
+  h3 {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12.976px;
+    line-height: 16px;
+    margin-bottom: 17px;
+    color: #666666;
+  }
 `;
+
+const HabitosLista = styled.form`
+  width: 355px;
+  padding: 18px 0 0 15px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  p {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19.976px;
+    line-height: 25px;
+    color: #666666;
+  }
+`;
+
+const Icon = styled(BsFillCheckSquareFill) `
+width: 69px;
+height: 69px;
+color: #EBEBEB;
+border: 1px solid #E7E7E7;
+border-radius: 5px;
+`

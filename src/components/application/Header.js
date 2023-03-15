@@ -1,10 +1,12 @@
 import TrackIt from "../assets/TrackIt.png";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <Top>
+    <Top><Link to="/">
       <h1>TrackIt</h1>
+      </Link>
       <img src={TrackIt} alt={TrackIt} />
     </Top>
   );
