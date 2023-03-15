@@ -3,16 +3,19 @@ import { AiFillPlusSquare } from "react-icons/ai";
 import HabitosForm from "./HabitosForm";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useState } from "react";
 
 export default function Aplication() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <Body>
       <Header />
       <ContentTitle>
         <p>Meus hábitos</p>
-        <Icon />
+        <Icon onClick={() => setShowForm(!showForm)} />
       </ContentTitle>
-      <HabitosForm />
+      {showForm && <HabitosForm />}
       <Content>
         <p>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
@@ -26,10 +29,12 @@ export default function Aplication() {
 
 const Body = styled.body`
   width: 411px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #e5e5e5;
+  overflow: auto;
 `;
 
 const ContentTitle = styled.div`

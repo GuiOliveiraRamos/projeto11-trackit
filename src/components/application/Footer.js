@@ -30,7 +30,9 @@ const Bottom = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 
   p {
     font-family: "Lexend Deca";

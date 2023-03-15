@@ -3,15 +3,17 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import ReactLoading from "react-loading";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const fazerLogin = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const salvarDados = {
       userEmail: email,
       userPassword: password,
@@ -41,7 +43,18 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Entrar</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <ReactLoading
+              type={"bubbles"}
+              color={"#ffffff"}
+              height={"20%"}
+              width={"20%"}
+            />
+          ) : (
+            "Entrar"
+          )}
+        </button>
       </form>
       <Link to="/cadastro">
         <p>Não tem uma conta? Cadastre-se!</p>
@@ -89,6 +102,9 @@ const LoginPage = styled.div`
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     width: 325px;
     height: 45px;
