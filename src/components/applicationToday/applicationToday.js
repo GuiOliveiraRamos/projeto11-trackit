@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { AiFillPlusSquare } from "react-icons/ai";
 import HabitosForm from "./HabitosForm";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "..application/Header";
+import Footer from "..application/Footer";
 import { useState } from "react";
 import HabitosList from "./HabitosList";
 
-export default function Aplication() {
+export default function AplicationToday() {
   const [showForm, setShowForm] = useState(false);
 
   return (
