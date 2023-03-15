@@ -7,22 +7,22 @@ import { useState } from "react";
 import HabitosList from "./HabitosList";
 
 export default function Aplication() {
-  
   const [showForm, setShowForm] = useState(false);
-  const [showList, setShowList] = useState(false)
+  const [showList, setShowList] = useState(false);
 
   const mostrarLista = () => {
-
-   setShowList(!showList)
-
-  }
+    setShowList(!showList);
+  };
 
   return (
     <Body>
-      <Header />
+      <Header data-test="header" />
       <ContentTitle>
         <p>Meus hábitos</p>
-        <Icon onClick={() => setShowForm(!showForm)} />
+        <Icon
+          data-test="habit-create-btn"
+          onClick={() => setShowForm(!showForm)}
+        />
       </ContentTitle>
       {showForm && <HabitosForm />}
       {showList && <HabitosList />}
@@ -32,7 +32,7 @@ export default function Aplication() {
           começar a trackear!
         </p>
       </Content>
-      <Footer mostrarLista={mostrarLista}/>
+      <Footer data-test="menu" mostrarLista={mostrarLista} />
     </Body>
   );
 }

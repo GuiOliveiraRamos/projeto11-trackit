@@ -5,24 +5,21 @@ import { useState } from "react";
 import HabitosList from "../application/HabitosList";
 
 export default function ApplicationHistoric() {
+  const [showList, setShowList] = useState(false);
 
-    const [showList, setShowList] = useState(false);
-
-    const mostrarLista = () => {
-  
-     setShowList(!showList)
-  
-    }
+  const mostrarLista = () => {
+    setShowList(!showList);
+  };
 
   return (
     <Body>
-      <Header />
+      <Header data-test="header" />
       <ContentTitle>
         <h2>Histórico</h2>
         <h3>Em breve você poderá ver o histórico dos seus hábitos aqui!</h3>
       </ContentTitle>
       {showList && <HabitosList />}
-      <Footer mostrarLista={mostrarLista}/>
+      <Footer data-test="menu" mostrarLista={mostrarLista} />
     </Body>
   );
 }
@@ -62,6 +59,3 @@ const ContentTitle = styled.div`
     color: #666666;
   }
 `;
-
-
-

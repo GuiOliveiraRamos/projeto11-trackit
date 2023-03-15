@@ -2,23 +2,27 @@ import styled from "styled-components";
 
 export default function HabitosForm() {
   return (
-    <HabitosForms>
+    <HabitosForms data-test="habit-create-container">
       <form>
         <label htmlFor="text"></label>
-        <input type="text" placeholder="nome do hábito"></input>
+        <input
+          data-test="habit-name-input"
+          type="text"
+          placeholder="nome do hábito"
+        ></input>
       </form>
       <HabitosButton>
-        <button>D</button>
-        <button>S</button>
-        <button>T</button>
-        <button>Q</button>
-        <button>Q</button>
-        <button>S</button>
-        <button>S</button>
+        <button data-test="habit-day">D</button>
+        <button data-test="habit-day">S</button>
+        <button data-test="habit-day">T</button>
+        <button data-test="habit-day">Q</button>
+        <button data-test="habit-day">Q</button>
+        <button data-test="habit-day">S</button>
+        <button data-test="habit-day">S</button>
       </HabitosButton>
       <EnviarHabitos>
-        <button>Cancelar</button>
-        <button>Salvar</button>
+        <button data-test="habit-create-cancel-btn">Cancelar</button>
+        <button data-test="habit-create-save-btn">Salvar</button>
       </EnviarHabitos>
     </HabitosForms>
   );

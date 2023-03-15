@@ -2,21 +2,20 @@ import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 
 export default function HabitosList() {
-  
   return (
-    <HabitosLista>
+    <HabitosLista data-test="habit-container">
       <Title>
-        <p>Hábito numero 1</p>
-        <BsTrash />
+        <p data-test="habit-name">Hábito numero 1</p>
+        <BsTrash data-test="habit-delete-btn" />
       </Title>
       <HabitosButton>
-        <button>D</button>
-        <button>S</button>
-        <button>T</button>
-        <button>Q</button>
-        <button>Q</button>
-        <button>S</button>
-        <button>S</button>
+        <button data-test="habit-day">D</button>
+        <button data-test="habit-day">S</button>
+        <button data-test="habit-day">T</button>
+        <button data-test="habit-day">Q</button>
+        <button data-test="habit-day">Q</button>
+        <button data-test="habit-day">S</button>
+        <button data-test="habit-day">S</button>
       </HabitosButton>
     </HabitosLista>
   );

@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <Top><Link to="/">
-      <h1>TrackIt</h1>
+    <Top data-test="header">
+      <Link to="/">
+        <h1>TrackIt</h1>
       </Link>
       <img src={TrackIt} alt={TrackIt} />
     </Top>

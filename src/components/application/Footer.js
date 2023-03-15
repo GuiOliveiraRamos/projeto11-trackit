@@ -3,28 +3,30 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
 
 export default function Footer(props) {
-
-  const {mostrarLista} = props
+  const { mostrarLista } = props;
 
   return (
-    <Bottom onClick={mostrarLista}>
-      <p>Hábitos</p>
-      <Link to="/hoje">
-      <Progress
-        value={66}
-        text={`Hoje`}
-        background
-        backgroundPadding={3}
-        styles={buildStyles({
-          backgroundColor: "#52B6FF",
-          textColor: "#fff",
-          pathColor: "#fff",
-          trailColor: "transparent",
-        })}
-      />
+    <Bottom data-test="menu">
+      <Link data-test="habit-link" onClick={mostrarLista} to="/habitos">
+        <p>Hábitos</p>
       </Link>
-      <Link to="/historico">
-      <p>Histórico</p>
+      <Link to="/hoje">
+        <Progress
+          data-test="today-link"
+          value={66}
+          text={`Hoje`}
+          background
+          backgroundPadding={3}
+          styles={buildStyles({
+            backgroundColor: "#52B6FF",
+            textColor: "#fff",
+            pathColor: "#fff",
+            trailColor: "transparent",
+          })}
+        />
+      </Link>
+      <Link data-test="history-link" to="/historico">
+        <p>Histórico</p>
       </Link>
     </Bottom>
   );

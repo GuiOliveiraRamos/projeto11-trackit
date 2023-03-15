@@ -1,42 +1,39 @@
 import styled from "styled-components";
 import Header from "../application/Header";
 import Footer from "../application/Footer";
-import {BsFillCheckSquareFill} from "react-icons/bs"
+import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useState } from "react";
 import HabitosList from "../application/HabitosList";
 
 export default function ApplicationToday() {
-
   const [showList, setShowList] = useState(false);
 
   const mostrarLista = () => {
-
-   setShowList(!showList)
-
-  }
+    setShowList(!showList);
+  };
 
   return (
     <Body>
-      <Header />
+      <Header data-test="header" />
       <ContentTitle>
-        <h2>Segunda, 17/05</h2>
-        <h3>Nenhum hábito concluido ainda</h3>
+        <h2 data-test="today">Segunda, 17/05</h2>
+        <h3 data-test="today-counter">Nenhum hábito concluido ainda</h3>
       </ContentTitle>
-      <HabitosLista>
+      <HabitosLista data-test="today-habit-container">
         <Title>
           <div>
-          <h2>Hábito numero 1</h2>
-          <h3>
-            Sequência atual: 3 dias
-            <br />
-            Seu recorde: 5 dias
-          </h3>
+            <h2 data-test="today-habit-name">Hábito numero 1</h2>
+            <h3 data-test="today-habit-sequence">
+              Sequência atual: 3 dias
+              <br />
+              <h4 data-test="today-habit-record"> Seu recorde: 5 dias</h4>
+            </h3>
           </div>
-          <Icon/>
+          <Icon data-test="today-habit-check-btn" />
         </Title>
       </HabitosLista>
       {showList && <HabitosList />}
-      <Footer mostrarLista={mostrarLista}/>
+      <Footer data-test="menu" mostrarLista={mostrarLista} />
     </Body>
   );
 }
@@ -91,7 +88,8 @@ const Title = styled.div`
     color: #666666;
   }
 
-  h3 {
+  h3,
+  h4 {
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;
@@ -122,10 +120,10 @@ const HabitosLista = styled.form`
   }
 `;
 
-const Icon = styled(BsFillCheckSquareFill) `
-width: 69px;
-height: 69px;
-color: #EBEBEB;
-border: 1px solid #E7E7E7;
-border-radius: 5px;
-`
+const Icon = styled(BsFillCheckSquareFill)`
+  width: 69px;
+  height: 69px;
+  color: #ebebeb;
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
+`;

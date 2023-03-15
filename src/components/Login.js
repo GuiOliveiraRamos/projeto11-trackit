@@ -9,11 +9,13 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
 
   const fazerLogin = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setIsDisabled(true);
     const salvarDados = {
       userEmail: email,
       userPassword: password,
@@ -22,10 +24,14 @@ export default function Login() {
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
       { email, password }
     );
-    request.then(() => navigate("/habitos", { state: { dados: salvarDados } }));
-    request.catch(() =>
-      window.location.reload(alert("Login ou senha inválidos"))
-    );
+    request.then(() => {
+      setIsDisabled(false);
+      navigate("/hoje", { state: { dados: salvarDados } });
+    });
+    request.catch((err) => {
+      setIsDisabled(false);
+      window.location.reload(alert(err.response.data.message));
+    });
   };
 
   return (
@@ -34,19 +40,27 @@ export default function Login() {
       <form onSubmit={fazerLogin}>
         <label htmlFor="email" />
         <input
+          data-test="email-input"
           type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isDisabled}
         />
         <label htmlFor="senha" />
         <input
+          data-test="password-input"
           type="password"
           placeholder="senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isDisabled}
         />
-        <button type="submit" disabled={isLoading}>
+        <button
+          data-test="login-btn"
+          type="submit"
+          disabled={(isLoading, isDisabled)}
+        >
           {isLoading ? (
             <ThreeDots
               height="80"
@@ -63,7 +77,7 @@ export default function Login() {
           )}
         </button>
       </form>
-      <Link to="/cadastro">
+      <Link data-test="signup-link" to="/cadastro">
         <p>Não tem uma conta? Cadastre-se!</p>
       </Link>
     </LoginPage>

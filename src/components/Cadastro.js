@@ -3,16 +3,21 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Group8 from "./assets/Group8.png";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Cadastro() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
 
   const fazerCadastro = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setIsDisabled(true);
     const salvarDados = {
       userEmail: email,
       userName: name,
@@ -23,7 +28,14 @@ export default function Cadastro() {
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
       { email, name, image, password }
     );
-    request.then(() => navigate("/", { state: { dados: salvarDados } }));
+    request.then(() => {
+      setIsDisabled(false);
+      navigate("/hoje", { state: { dados: salvarDados } });
+    });
+    request.catch((err) => {
+      setIsDisabled(false);
+      window.location.reload(alert(err.response.data.message));
+    });
   };
 
   return (
@@ -32,35 +44,58 @@ export default function Cadastro() {
       <form onSubmit={fazerCadastro}>
         <label htmlFor="email" />
         <input
+          data-test="email-input"
           type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isDisabled}
         />
         <label htmlFor="senha" />
         <input
+          data-test="password-input"
           type="password"
           placeholder="senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isDisabled}
         />
         <label htmlFor="nome" />
         <input
+          data-test="user-name-input"
           type="name"
           placeholder="nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isDisabled}
         />
         <label htmlFor="foto" />
         <input
-          type="foto"
+          data-test="user-image-input"
+          type="url"
           placeholder="foto"
           value={image}
           onChange={(e) => setImage(e.target.value)}
+          disabled={isDisabled}
         />
-        <button type="submit">Cadastrar</button>
+        <button data-test="signup-btn" type="submit" disabled={isDisabled}>
+          {isLoading ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#ffffff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            "Cadastrar"
+          )}
+        </button>
       </form>
-      <Link to="/">
+      <Link data-test="login-link" to="/">
         <p>Já tem uma conta? Faça login!</p>
       </Link>
     </RegisterPage>
@@ -118,6 +153,9 @@ const RegisterPage = styled.div`
     line-height: 26px;
     text-align: center;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   p {
