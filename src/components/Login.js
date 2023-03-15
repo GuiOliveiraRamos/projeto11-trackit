@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import ReactLoading from "react-loading";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,7 +23,9 @@ export default function Login() {
       { email, password }
     );
     request.then(() => navigate("/habitos", { state: { dados: salvarDados } }));
-    request.catch(() => window.location.reload(alert("Login ou senha inválidos")));
+    request.catch(() =>
+      window.location.reload(alert("Login ou senha inválidos"))
+    );
   };
 
   return (
@@ -46,11 +48,15 @@ export default function Login() {
         />
         <button type="submit" disabled={isLoading}>
           {isLoading ? (
-            <ReactLoading
-              type={"bubbles"}
-              color={"#ffffff"}
-              height={"20%"}
-              width={"20%"}
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#ffffff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
             />
           ) : (
             "Entrar"
