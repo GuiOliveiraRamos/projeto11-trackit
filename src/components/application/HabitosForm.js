@@ -33,6 +33,7 @@ const HabitosForms = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 
   input {
     width: 303px;

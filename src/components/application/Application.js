@@ -7,7 +7,15 @@ import { useState } from "react";
 import HabitosList from "./HabitosList";
 
 export default function Aplication() {
+  
   const [showForm, setShowForm] = useState(false);
+  const [showList, setShowList] = useState(false)
+
+  const mostrarLista = () => {
+
+   setShowList(!showList)
+
+  }
 
   return (
     <Body>
@@ -17,14 +25,14 @@ export default function Aplication() {
         <Icon onClick={() => setShowForm(!showForm)} />
       </ContentTitle>
       {showForm && <HabitosForm />}
-      <HabitosList />
+      {showList && <HabitosList />}
       <Content>
         <p>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
           começar a trackear!
         </p>
       </Content>
-      <Footer />
+      <Footer mostrarLista={mostrarLista}/>
     </Body>
   );
 }
@@ -78,4 +86,5 @@ const Icon = styled(AiFillPlusSquare)`
   height: 35px;
   color: #52b6ff;
   border-radius: 4.63636px;
+  cursor: pointer;
 `;

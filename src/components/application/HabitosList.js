@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 
 export default function HabitosList() {
+  
   return (
     <HabitosLista>
       <Title>

@@ -1,29 +1,19 @@
 import styled from "styled-components";
 import { AiFillPlusSquare } from "react-icons/ai";
-import HabitosForm from "./HabitosForm";
-import Header from "..application/Header";
-import Footer from "..application/Footer";
-import { useState } from "react";
-import HabitosList from "./HabitosList";
+import Header from "../application/Header";
+import Footer from "../application/Footer";
+import HabitosList from "../application/HabitosList"
 
-export default function AplicationToday() {
-  const [showForm, setShowForm] = useState(false);
+export default function ApplicationToday() {
 
   return (
     <Body>
       <Header />
       <ContentTitle>
         <p>Meus hábitos</p>
-        <Icon onClick={() => setShowForm(!showForm)} />
+        <Icon />          
       </ContentTitle>
-      {showForm && <HabitosForm />}
       <HabitosList />
-      <Content>
-        <p>
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </p>
-      </Content>
       <Footer />
     </Body>
   );
@@ -31,12 +21,12 @@ export default function AplicationToday() {
 
 const Body = styled.body`
   width: 411px;
-  height: auto;
+  height: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #e5e5e5;
-  overflow: auto;
+  
 `;
 
 const ContentTitle = styled.div`
@@ -53,23 +43,6 @@ const ContentTitle = styled.div`
     font-size: 22.976px;
     line-height: 29px;
     color: #126ba5;
-  }
-`;
-
-const Content = styled.div`
-  width: 360px;
-  padding: 29px 18px 107px 18px;
-  background-color: #e5e5e5;
-  display: flex;
-  justify-content: space-between;
-
-  p {
-    font-family: "Lexend Deca";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17.976px;
-    line-height: 22px;
-    color: #666666;
   }
 `;
 

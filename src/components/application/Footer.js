@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { Link } from "react-router-dom";
 
-export default function Footer() {
+export default function Footer(props) {
+
+  const {mostrarLista} = props
+
   return (
-    <Bottom>
+    <Bottom onClick={mostrarLista}>
       <p>Hábitos</p>
+      <Link to="/hoje">
       <Progress
         value={66}
         text={`Hoje`}
@@ -17,7 +22,10 @@ export default function Footer() {
           trailColor: "transparent",
         })}
       />
+      </Link>
+      <Link to="/historico">
       <p>Histórico</p>
+      </Link>
     </Bottom>
   );
 }
@@ -35,6 +43,8 @@ const Bottom = styled.footer`
   left: 0;
 
   p {
+    cursor: pointer;
+    text-decoration: none;
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;
