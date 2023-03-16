@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Group8 from "./assets/Group8.png";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import { Context } from "./Context";
 
 export default function Cadastro() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export default function Cadastro() {
   const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const { setImageC } = useContext(Context);
   const navigate = useNavigate();
 
   const fazerCadastro = (e) => {
@@ -24,12 +26,14 @@ export default function Cadastro() {
       userPassword: password,
       userImage: image,
     };
+    console.log("salvarDados", salvarDados);
     const request = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
       { email, name, image, password }
     );
     request.then(() => {
       setIsDisabled(false);
+      setImageC(image);
       navigate("/hoje", { state: { dados: salvarDados } });
     });
     request.catch((err) => {
@@ -39,66 +43,68 @@ export default function Cadastro() {
   };
 
   return (
-    <RegisterPage>
-      <img src={Group8} alt="logo" />
-      <form onSubmit={fazerCadastro}>
-        <label htmlFor="email" />
-        <input
-          data-test="email-input"
-          type="email"
-          placeholder="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={isDisabled}
-        />
-        <label htmlFor="senha" />
-        <input
-          data-test="password-input"
-          type="password"
-          placeholder="senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          disabled={isDisabled}
-        />
-        <label htmlFor="nome" />
-        <input
-          data-test="user-name-input"
-          type="name"
-          placeholder="nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          disabled={isDisabled}
-        />
-        <label htmlFor="foto" />
-        <input
-          data-test="user-image-input"
-          type="url"
-          placeholder="foto"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          disabled={isDisabled}
-        />
-        <button data-test="signup-btn" type="submit" disabled={isDisabled}>
-          {isLoading ? (
-            <ThreeDots
-              height="80"
-              width="80"
-              radius="9"
-              color="#ffffff"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClassName=""
-              visible={true}
-            />
-          ) : (
-            "Cadastrar"
-          )}
-        </button>
-      </form>
-      <Link data-test="login-link" to="/">
-        <p>Já tem uma conta? Faça login!</p>
-      </Link>
-    </RegisterPage>
+    <Context.Provider value={{ image }}>
+      <RegisterPage>
+        <img src={Group8} alt="logo" />
+        <form onSubmit={fazerCadastro}>
+          <label htmlFor="email" />
+          <input
+            data-test="email-input"
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isDisabled}
+          />
+          <label htmlFor="senha" />
+          <input
+            data-test="password-input"
+            type="password"
+            placeholder="senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isDisabled}
+          />
+          <label htmlFor="nome" />
+          <input
+            data-test="user-name-input"
+            type="name"
+            placeholder="nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={isDisabled}
+          />
+          <label htmlFor="foto" />
+          <input
+            data-test="user-image-input"
+            type="url"
+            placeholder="foto"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            disabled={isDisabled}
+          />
+          <button data-test="signup-btn" type="submit" disabled={isDisabled}>
+            {isLoading ? (
+              <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#ffffff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            ) : (
+              "Cadastrar"
+            )}
+          </button>
+        </form>
+        <Link data-test="login-link" to="/">
+          <p>Já tem uma conta? Faça login!</p>
+        </Link>
+      </RegisterPage>
+    </Context.Provider>
   );
 }
 

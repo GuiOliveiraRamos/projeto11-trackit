@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import { useState } from "react";
 import HabitosList from "./HabitosList";
 
-export default function Aplication() {
+export default function Application() {
   const [showForm, setShowForm] = useState(false);
   const [showList, setShowList] = useState(false);
 

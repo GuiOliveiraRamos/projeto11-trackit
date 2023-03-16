@@ -1,14 +1,17 @@
-import TrackIt from "../assets/TrackIt.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Context } from "../Context";
 
 export default function Header() {
+  const { image } = useContext(Context);
+
   return (
     <Top data-test="header">
       <Link to="/">
         <h1>TrackIt</h1>
       </Link>
-      <img src={TrackIt} alt={TrackIt} />
+      <img src={image} alt={image} />
     </Top>
   );
 }
