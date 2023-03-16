@@ -24,7 +24,7 @@ export default function ApplicationHistoric() {
   );
 }
 
-const Body = styled.body`
+const Body = styled.div`
   width: 411px;
   height: 800px;
   display: flex;

@@ -1,19 +1,20 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Group8 from "./assets/Group8.png";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import { Context } from "./Context";
+import DataContext from "./DataContext";
 
 export default function Cadastro() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(
+    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/2022.png"
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const { setImageC } = useContext(Context);
   const navigate = useNavigate();
 
   const fazerCadastro = (e) => {
@@ -33,7 +34,6 @@ export default function Cadastro() {
     );
     request.then(() => {
       setIsDisabled(false);
-      setImageC(image);
       navigate("/hoje", { state: { dados: salvarDados } });
     });
     request.catch((err) => {
@@ -43,7 +43,7 @@ export default function Cadastro() {
   };
 
   return (
-    <Context.Provider value={{ image }}>
+    <DataContext.Provider value={image}>
       <RegisterPage>
         <img src={Group8} alt="logo" />
         <form onSubmit={fazerCadastro}>
@@ -104,7 +104,7 @@ export default function Cadastro() {
           <p>Já tem uma conta? Faça login!</p>
         </Link>
       </RegisterPage>
-    </Context.Provider>
+    </DataContext.Provider>
   );
 }
 

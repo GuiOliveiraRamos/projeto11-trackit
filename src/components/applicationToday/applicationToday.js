@@ -26,7 +26,7 @@ export default function ApplicationToday() {
             <h3 data-test="today-habit-sequence">
               Sequência atual: 3 dias
               <br />
-              <h4 data-test="today-habit-record"> Seu recorde: 5 dias</h4>
+              <p data-test="today-habit-record"> Seu recorde: 5 dias</p>
             </h3>
           </div>
           <Icon data-test="today-habit-check-btn" />
@@ -38,7 +38,7 @@ export default function ApplicationToday() {
   );
 }
 
-const Body = styled.body`
+const Body = styled.div`
   width: 411px;
   height: 800px;
   display: flex;
@@ -89,7 +89,7 @@ const Title = styled.div`
   }
 
   h3,
-  h4 {
+  p {
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;

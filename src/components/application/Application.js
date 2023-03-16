@@ -37,7 +37,7 @@ export default function Application() {
   );
 }
 
-const Body = styled.body`
+const Body = styled.div`
   width: 411px;
   height: auto;
   display: flex;

@@ -28,7 +28,7 @@ export default function HabitosForm() {
   );
 }
 
-const HabitosForms = styled.form`
+const HabitosForms = styled.div`
   width: 355px;
   padding: 18px 0 15px 0;
   background-color: #ffffff;
