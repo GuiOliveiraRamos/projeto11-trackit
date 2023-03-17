@@ -1,13 +1,17 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UsuarioContext } from "../DataContext";
 
 export default function Header() {
+  const { image } = useContext(UsuarioContext);
+
   return (
     <Top data-test="header">
       <Link to="/">
         <h1>TrackIt</h1>
       </Link>
-      <img src="" alt="" />
+      <img src={image} alt={image} />
     </Top>
   );
 }
