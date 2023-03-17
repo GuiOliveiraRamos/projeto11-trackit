@@ -4,10 +4,13 @@ import Footer from "../application/Footer";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useState } from "react";
 import HabitosList from "../application/HabitosList";
+import dayjs from "dayjs";
+
+dayjs.locale("pt-br");
+dayjs().locale("pt-br").format("DD [de] MMMM [de] YYYY");
 
 export default function ApplicationToday() {
   const [showList, setShowList] = useState(false);
-
   const mostrarLista = () => {
     setShowList(!showList);
   };
@@ -16,7 +19,7 @@ export default function ApplicationToday() {
     <Body>
       <Header data-test="header" />
       <ContentTitle>
-        <h2 data-test="today">Segunda, 17/05</h2>
+        <h2 data-test="today">{dayjs().format("dddd, DD/MM")}</h2>
         <h3 data-test="today-counter">Nenhum hábito concluido ainda</h3>
       </ContentTitle>
       <HabitosLista data-test="today-habit-container">
