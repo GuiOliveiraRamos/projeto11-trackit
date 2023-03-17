@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function Footer(props) {
   const { mostrarLista } = props;

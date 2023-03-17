@@ -1,5 +1,4 @@
 import { createContext } from "react";
 
-const DataContext = createContext("");
-
-export default DataContext;
+export const UsuarioContext = createContext();
+export const HabitosContext = createContext();

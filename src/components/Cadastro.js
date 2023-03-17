@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Group8 from "./assets/Group8.png";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import DataContext from "./DataContext";
 
 export default function Cadastro() {
   const [email, setEmail] = useState("");
@@ -43,68 +42,66 @@ export default function Cadastro() {
   };
 
   return (
-    <DataContext.Provider value={image}>
-      <RegisterPage>
-        <img src={Group8} alt="logo" />
-        <form onSubmit={fazerCadastro}>
-          <label htmlFor="email" />
-          <input
-            data-test="email-input"
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={isDisabled}
-          />
-          <label htmlFor="senha" />
-          <input
-            data-test="password-input"
-            type="password"
-            placeholder="senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={isDisabled}
-          />
-          <label htmlFor="nome" />
-          <input
-            data-test="user-name-input"
-            type="name"
-            placeholder="nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            disabled={isDisabled}
-          />
-          <label htmlFor="foto" />
-          <input
-            data-test="user-image-input"
-            type="url"
-            placeholder="foto"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            disabled={isDisabled}
-          />
-          <button data-test="signup-btn" type="submit" disabled={isDisabled}>
-            {isLoading ? (
-              <ThreeDots
-                height="80"
-                width="80"
-                radius="9"
-                color="#ffffff"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClassName=""
-                visible={true}
-              />
-            ) : (
-              "Cadastrar"
-            )}
-          </button>
-        </form>
-        <Link data-test="login-link" to="/">
-          <p>Já tem uma conta? Faça login!</p>
-        </Link>
-      </RegisterPage>
-    </DataContext.Provider>
+    <RegisterPage>
+      <img src={Group8} alt="logo" />
+      <form onSubmit={fazerCadastro}>
+        <label htmlFor="email" />
+        <input
+          data-test="email-input"
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={isDisabled}
+        />
+        <label htmlFor="senha" />
+        <input
+          data-test="password-input"
+          type="password"
+          placeholder="senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={isDisabled}
+        />
+        <label htmlFor="nome" />
+        <input
+          data-test="user-name-input"
+          type="name"
+          placeholder="nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          disabled={isDisabled}
+        />
+        <label htmlFor="foto" />
+        <input
+          data-test="user-image-input"
+          type="url"
+          placeholder="foto"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          disabled={isDisabled}
+        />
+        <button data-test="signup-btn" type="submit" disabled={isDisabled}>
+          {isLoading ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#ffffff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            "Cadastrar"
+          )}
+        </button>
+      </form>
+      <Link data-test="login-link" to="/">
+        <p>Já tem uma conta? Faça login!</p>
+      </Link>
+    </RegisterPage>
   );
 }
 
