@@ -2,18 +2,31 @@ import styled from "styled-components";
 import Header from "../application/Header";
 import Footer from "../application/Footer";
 import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HabitosList from "../application/HabitosList";
 import dayjs from "dayjs";
+import axios from "axios";
 
 dayjs.locale("pt-br");
 dayjs().locale("pt-br").format("DD [de] MMMM [de] YYYY");
 
 export default function ApplicationToday() {
   const [showList, setShowList] = useState(false);
+  const[habitos, setHabitos] = useState([])
   const mostrarLista = () => {
     setShowList(!showList);
   };
+
+  useEffect(() => {
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
+    const request = axios.get(url);
+
+    request.then((resposta) => {
+      console.log(resposta.data);
+      setHabitos(resposta.data)
+    });
+  }, []);
+
 
   return (
     <Body>
@@ -24,6 +37,7 @@ export default function ApplicationToday() {
       </ContentTitle>
       <HabitosLista data-test="today-habit-container">
         <Title>
+        {habitos.map(() => (
           <div>
             <h2 data-test="today-habit-name">Hábito numero 1</h2>
             <h3 data-test="today-habit-sequence">
@@ -32,7 +46,8 @@ export default function ApplicationToday() {
               <p data-test="today-habit-record"> Seu recorde: 5 dias</p>
             </h3>
           </div>
-          <Icon data-test="today-habit-check-btn" />
+          ))}
+          <Icon data-test="today-habit-check-btn" />          
         </Title>
       </HabitosLista>
       {showList && <HabitosList />}
