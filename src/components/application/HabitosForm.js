@@ -1,48 +1,49 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useContext } from "react";
-import { UsuarioContext } from "../DataContext";
+import { useState } from "react";
 
 export default function HabitosForm() {
   const diasDaSemana = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
-  const { dados } = useContext(UsuarioContext);
+
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODQ5NSwiaWF0IjoxNjc5MDY5NTAwfQ.ujJUyd15_RQB4OZ5BbEN3DUSyMCUm5RnkA2KL8zQeZc";
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   function criarHabito(event) {
     event.preventDefault();
 
-    const bearerToken = {
-      headers: {
-        Authorization: `Bearer ${dados.token}`,
-      },
-    };
     const dadosDoHabito = {
       name,
-      days,
+      days: days.map((dia) => diasDaSemana.indexOf(dia)),
     };
 
     axios
       .post(
         "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
         dadosDoHabito,
-        bearerToken
+        config
       )
       .then((response) => {
-        alert(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
-        alert(error.response.data);
+        alert(JSON.stringify(error.response.data));
       });
   }
 
   function selecionarDia(day) {
-    if (days.includes(day)) {
-      setDays(days.filter((d) => d !== day));
+    const dayIndex = diasDaSemana.indexOf(day);
+    if (days.includes(dayIndex)) {
+      setDays(days.filter((d) => d !== dayIndex));
     } else {
-      setDays([...days, day]);
+      setDays([...days, dayIndex]);
     }
-    console.log(days);
   }
 
   return (

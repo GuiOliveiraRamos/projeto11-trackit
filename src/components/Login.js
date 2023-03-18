@@ -24,9 +24,10 @@ export default function Login() {
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
       { email, password }
     );
-    request.then(() => {
+    request.then((response) => {
       setIsDisabled(false);
       navigate("/hoje", { state: { dados: salvarDados } });
+      console.log(response.data);
     });
     request.catch((err) => {
       setIsDisabled(false);

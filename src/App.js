@@ -10,10 +10,14 @@ import { UsuarioContext, HabitosContext } from "./components/DataContext";
 export default function App() {
   const [dados, setDados] = useState(null);
   const [habitos, setHabitos] = useState(0);
+  const imageUrl =
+    "http://conteudo.imguol.com.br/c/entretenimento/0e/2017/10/15/batata-crua-1508077604971_v2_1920x1269.jpg";
+
+  const contextValue = { dados, setDados, image: imageUrl };
 
   return (
     <BrowserRouter>
-      <UsuarioContext.Provider value={{ dados, setDados }}>
+      <UsuarioContext.Provider value={contextValue}>
         <HabitosContext.Provider value={{ habitos, setHabitos }}>
           <Routes>
             <Route path="/" element={<Login />} />
