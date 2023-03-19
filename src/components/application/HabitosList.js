@@ -29,13 +29,37 @@ export default function HabitosList() {
       });
   }, []);
 
+  function deletarHabito(habitId) {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .delete(
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`,
+        config
+      )
+      .then(() => {
+        setHabitos(habitos.filter((habito) => habito.id !== habitId));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       {habitos.map((habito) => (
         <HabitosLista key={habito.id} data-test="habit-container">
           <Title>
             <p data-test="habit-name">{habito.name}</p>
-            <BsTrash data-test="habit-delete-btn" />
+            <BsTrash
+              data-test="habit-delete-btn"
+              onClick={() => deletarHabito(habito.id)}
+            />
           </Title>
           <HabitosButton>
             {["D", "S", "T", "Q", "Q", "S", "S"].map((dia, index) => (

@@ -17,7 +17,6 @@ export default function HabitosForm() {
 
   function criarHabito(event) {
     event.preventDefault();
-
     const dadosDoHabito = {
       name,
       days: days
@@ -42,7 +41,6 @@ export default function HabitosForm() {
   }
 
   function selecionarDia(day) {
-    const dayIndex = diasDaSemana.indexOf(day);
     if (days.includes(day)) {
       setDays(days.filter((d) => d !== day));
     } else {
@@ -66,7 +64,7 @@ export default function HabitosForm() {
           {diasDaSemana.map((dia) => (
             <button
               data-test="habit-day"
-              key={dia}
+              type="button"
               isSelected={days.includes(dia)}
               onClick={() => selecionarDia(dia)}
             >
@@ -75,7 +73,9 @@ export default function HabitosForm() {
           ))}
         </HabitosButton>
         <EnviarHabitos>
-          <button data-test="habit-create-cancel-btn">Cancelar</button>
+          <button data-test="habit-create-cancel-btn" type="button">
+            Cancelar
+          </button>
           <button type="submit" data-test="habit-create-save-btn">
             Salvar
           </button>
@@ -131,14 +131,8 @@ const HabitosButton = styled.div`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb; /* Remova essa linha */
+    color: #dbdbdb;
     margin-right: 4px;
-    &:hover {
-      background-color: ${(props) =>
-        props.isSelected ? "#CFCFCF" : "#d5d5d5"};
-      color: ${(props) => (props.isSelected ? "#FFFFFF" : "#DBDBDB")};
-      cursor: pointer;
-    }
   }
 `;
 
