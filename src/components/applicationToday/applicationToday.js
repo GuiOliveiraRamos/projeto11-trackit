@@ -39,6 +39,40 @@ export default function ApplicationToday() {
       });
   }, []);
 
+  const marcarConcluido = (habito) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`;
+
+    axios
+      .post(url, {}, config)
+      .then(() => {
+        const updatedHabitos = habitos.map((h) => {
+          if (h.id === habito.id) {
+            const updatedDays = habito.days
+              ? [...habito.days, dayjs().format("YYYY-MM-DD")]
+              : [dayjs().format("YYYY-MM-DD")];
+            return {
+              ...habito,
+              days: updatedDays,
+            };
+          }
+          return h;
+        });
+        setHabitos(updatedHabitos);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    console.log(habito);
+  };
+
   return (
     <Body>
       <Header data-test="header" />
@@ -52,15 +86,43 @@ export default function ApplicationToday() {
             <div>
               <h2 data-test="today-habit-name">{habito.name}</h2>
               <h3 data-test="today-habit-sequence">
-                Sequência atual: {habito.days ? habito.days.length : 0}
+                Sequência atual:{" "}
+                <span
+                  style={{
+                    color:
+                      habito.days && habito.days.length > 0
+                        ? habito.days.length === habito.highestSequence
+                          ? "#8FC549"
+                          : "#666"
+                        : "#666",
+                  }}
+                >
+                  {habito.days ? habito.days.length : 0}
+                </span>
                 <br />
                 <p data-test="today-habit-record">
                   {" "}
-                  Seu recorde: {habito.days ? Math.max(...habito.days) : 0}
+                  Seu recorde:{" "}
+                  <span
+                    style={{
+                      color:
+                        habito.days &&
+                        habito.days.length > 0 &&
+                        habito.days.length === habito.highestSequence
+                          ? "#8FC549"
+                          : "#666",
+                    }}
+                  >
+                    {habito.days ? Math.max(...habito.days) : 0}
+                  </span>
                 </p>
               </h3>
             </div>
-            <Icon data-test="today-habit-check-btn" />
+            <Icon
+              data-test="today-habit-check-btn"
+              style={{ color: habito.done ? "#8FC549" : "#ebebeb" }}
+              onClick={() => marcarConcluido(habito)}
+            />
           </Title>
         ))}
       </HabitosLista>
@@ -155,7 +217,8 @@ const HabitosLista = styled.form`
 const Icon = styled(BsFillCheckSquareFill)`
   width: 69px;
   height: 69px;
-  color: #ebebeb;
+  color: ${({ concluido }) => (concluido ? "#8FC549" : "#ebebeb")};
   border: 1px solid #e7e7e7;
   border-radius: 5px;
+  cursor: pointer;
 `;

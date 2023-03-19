@@ -30,24 +30,30 @@ export default function HabitosList() {
   }, []);
 
   function deletarHabito(habitId) {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .delete(
-        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`,
-        config
-      )
-      .then(() => {
-        setHabitos(habitos.filter((habito) => habito.id !== habitId));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const confirmacao = window.confirm(
+      "Tem certeza que deseja excluir este hábito?"
+    );
+
+    if (confirmacao) {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios
+        .delete(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`,
+          config
+        )
+        .then(() => {
+          setHabitos(habitos.filter((habito) => habito.id !== habitId));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   return (

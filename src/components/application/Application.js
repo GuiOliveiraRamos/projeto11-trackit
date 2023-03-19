@@ -8,11 +8,6 @@ import HabitosList from "./HabitosList";
 
 export default function Application() {
   const [showForm, setShowForm] = useState(false);
-  const [showList, setShowList] = useState(false);
-
-  const mostrarLista = () => {
-    setShowList(!showList);
-  };
 
   return (
     <Body>
@@ -25,14 +20,16 @@ export default function Application() {
         />
       </ContentTitle>
       {showForm && <HabitosForm />}
-      {showList && <HabitosList />}
+
+      <HabitosList />
+
       <Content>
         <p>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
           começar a trackear!
         </p>
       </Content>
-      <Footer data-test="menu" mostrarLista={mostrarLista} />
+      <Footer data-test="menu" />
     </Body>
   );
 }

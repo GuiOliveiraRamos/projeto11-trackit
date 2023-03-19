@@ -3,12 +3,10 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
 import "react-circular-progressbar/dist/styles.css";
 
-export default function Footer(props) {
-  const { mostrarLista } = props;
-
+export default function Footer() {
   return (
     <Bottom data-test="menu">
-      <Link data-test="habit-link" onClick={mostrarLista} to="/habitos">
+      <Link data-test="habit-link" to="/habitos">
         <p>Hábitos</p>
       </Link>
       <Link to="/hoje">
