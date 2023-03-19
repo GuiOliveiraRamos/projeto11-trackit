@@ -12,21 +12,32 @@ dayjs().locale("pt-br").format("DD [de] MMMM [de] YYYY");
 
 export default function ApplicationToday() {
   const [showList, setShowList] = useState(false);
-  const[habitos, setHabitos] = useState([])
+  const [habitos, setHabitos] = useState([]);
   const mostrarLista = () => {
     setShowList(!showList);
   };
 
   useEffect(() => {
-    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
-    const request = axios.get(url);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-    request.then((resposta) => {
-      console.log(resposta.data);
-      setHabitos(resposta.data)
-    });
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+    const request = axios.get(url, config);
+
+    request
+      .then((resposta) => {
+        console.log(resposta.data);
+        setHabitos(resposta.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
-
 
   return (
     <Body>
@@ -36,19 +47,22 @@ export default function ApplicationToday() {
         <h3 data-test="today-counter">Nenhum hábito concluido ainda</h3>
       </ContentTitle>
       <HabitosLista data-test="today-habit-container">
-        <Title>
-        {habitos.map(() => (
-          <div>
-            <h2 data-test="today-habit-name">Hábito numero 1</h2>
-            <h3 data-test="today-habit-sequence">
-              Sequência atual: 3 dias
-              <br />
-              <p data-test="today-habit-record"> Seu recorde: 5 dias</p>
-            </h3>
-          </div>
-          ))}
-          <Icon data-test="today-habit-check-btn" />          
-        </Title>
+        {habitos.map((habito) => (
+          <Title key={habito.id}>
+            <div>
+              <h2 data-test="today-habit-name">{habito.name}</h2>
+              <h3 data-test="today-habit-sequence">
+                Sequência atual: {habito.days ? habito.days.length : 0}
+                <br />
+                <p data-test="today-habit-record">
+                  {" "}
+                  Seu recorde: {habito.days ? Math.max(...habito.days) : 0}
+                </p>
+              </h3>
+            </div>
+            <Icon data-test="today-habit-check-btn" />
+          </Title>
+        ))}
       </HabitosLista>
       {showList && <HabitosList />}
       <Footer data-test="menu" mostrarLista={mostrarLista} />

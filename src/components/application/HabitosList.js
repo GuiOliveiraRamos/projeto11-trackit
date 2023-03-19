@@ -1,23 +1,52 @@
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 export default function HabitosList() {
+  const [habitos, setHabitos] = useState([]);
+
+  useEffect(() => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+        config
+      )
+      .then((response) => {
+        setHabitos(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
-    <HabitosLista data-test="habit-container">
-      <Title>
-        <p data-test="habit-name">Hábito numero 1</p>
-        <BsTrash data-test="habit-delete-btn" />
-      </Title>
-      <HabitosButton>
-        <button data-test="habit-day">D</button>
-        <button data-test="habit-day">S</button>
-        <button data-test="habit-day">T</button>
-        <button data-test="habit-day">Q</button>
-        <button data-test="habit-day">Q</button>
-        <button data-test="habit-day">S</button>
-        <button data-test="habit-day">S</button>
-      </HabitosButton>
-    </HabitosLista>
+    <>
+      {habitos.map((habito) => (
+        <HabitosLista key={habito.id} data-test="habit-container">
+          <Title>
+            <p data-test="habit-name">{habito.name}</p>
+            <BsTrash data-test="habit-delete-btn" />
+          </Title>
+          <HabitosButton>
+            {["D", "S", "T", "Q", "Q", "S", "S"].map((dia, index) => (
+              <button key={index} data-test="habit-day">
+                {dia}
+              </button>
+            ))}
+          </HabitosButton>
+        </HabitosLista>
+      ))}
+    </>
   );
 }
 

@@ -8,7 +8,7 @@ export default function HabitosForm() {
   const [days, setDays] = useState([]);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODQ5NSwiaWF0IjoxNjc5MDY5NTAwfQ.ujJUyd15_RQB4OZ5BbEN3DUSyMCUm5RnkA2KL8zQeZc";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -20,8 +20,12 @@ export default function HabitosForm() {
 
     const dadosDoHabito = {
       name,
-      days: days.map((dia) => diasDaSemana.indexOf(dia)),
+      days: days
+        .map((dia) => diasDaSemana.indexOf(dia))
+        .filter((index) => index !== -1),
     };
+
+    console.log(dadosDoHabito);
 
     axios
       .post(
@@ -39,10 +43,10 @@ export default function HabitosForm() {
 
   function selecionarDia(day) {
     const dayIndex = diasDaSemana.indexOf(day);
-    if (days.includes(dayIndex)) {
-      setDays(days.filter((d) => d !== dayIndex));
+    if (days.includes(day)) {
+      setDays(days.filter((d) => d !== day));
     } else {
-      setDays([...days, dayIndex]);
+      setDays([...days, day]);
     }
   }
 
@@ -127,8 +131,14 @@ const HabitosButton = styled.div`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb;
+    color: #dbdbdb; /* Remova essa linha */
     margin-right: 4px;
+    &:hover {
+      background-color: ${(props) =>
+        props.isSelected ? "#CFCFCF" : "#d5d5d5"};
+      color: ${(props) => (props.isSelected ? "#FFFFFF" : "#DBDBDB")};
+      cursor: pointer;
+    }
   }
 `;
 
