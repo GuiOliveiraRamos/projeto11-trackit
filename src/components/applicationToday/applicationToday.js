@@ -55,11 +55,15 @@ export default function ApplicationToday() {
       .then(() => {
         const updatedHabitos = habitos.map((h) => {
           if (h.id === habito.id) {
-            const updatedDays = habito.days
-              ? [...habito.days, dayjs().format("YYYY-MM-DD")]
-              : [dayjs().format("YYYY-MM-DD")];
+            const updatedDays = [...habito.days, dayjs().format("YYYY-MM-DD")];
             return {
               ...habito,
+              done: true,
+              currentSequence: habito.currentSequence + 1,
+              highestSequence: Math.max(
+                habito.highestSequence,
+                habito.currentSequence + 1
+              ),
               days: updatedDays,
             };
           }
@@ -68,9 +72,39 @@ export default function ApplicationToday() {
         setHabitos(updatedHabitos);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
       });
-    console.log(habito);
+  };
+
+  const marcarNaoConcluido = (habito) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/uncheck`;
+
+    axios
+      .post(url, {}, config)
+      .then(() => {
+        const updatedHabitos = habitos.map((h) => {
+          if (h.id === habito.id) {
+            return {
+              ...habito,
+              done: false,
+              currentSequence: Math.max(0, habito.currentSequence - 1),
+            };
+          }
+          return h;
+        });
+        setHabitos(updatedHabitos);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -78,7 +112,7 @@ export default function ApplicationToday() {
       <Header data-test="header" />
       <ContentTitle>
         <h2 data-test="today">{dayjs().format("dddd, DD/MM")}</h2>
-        <h3 data-test="today-counter">Nenhum hábito concluido ainda</h3>
+        <h3 data-test="today-counter">nenhum hábito concluido</h3>
       </ContentTitle>
       <HabitosLista data-test="today-habit-container">
         {habitos.map((habito) => (
@@ -118,11 +152,19 @@ export default function ApplicationToday() {
                 </p>
               </h3>
             </div>
-            <Icon
-              data-test="today-habit-check-btn"
-              style={{ color: habito.done ? "#8FC549" : "#ebebeb" }}
-              onClick={() => marcarConcluido(habito)}
-            />
+            {habito.done ? (
+              <Icon
+                data-test="today-habit-check-btn"
+                style={{ color: "#8FC549" }}
+                onClick={() => marcarNaoConcluido(habito)}
+              />
+            ) : (
+              <Icon
+                data-test="today-habit-check-btn"
+                style={{ color: "#ebebeb" }}
+                onClick={() => marcarConcluido(habito)}
+              />
+            )}
           </Title>
         ))}
       </HabitosLista>
