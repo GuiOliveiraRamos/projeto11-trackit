@@ -7,6 +7,8 @@ export default function HabitosForm() {
   const diasDaSemana = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const { token } = useContext(dadosContext);
 
   const config = {
@@ -17,6 +19,7 @@ export default function HabitosForm() {
 
   function criarHabito(event) {
     event.preventDefault();
+    setIsDisabled(true);
     const dadosDoHabito = {
       name,
       days: days
@@ -34,9 +37,11 @@ export default function HabitosForm() {
       )
       .then((response) => {
         console.log(response.data);
+        setIsDisabled(true);
       })
       .catch((error) => {
         alert(error.response.data);
+        setIsDisabled(true);
       });
   }
 
@@ -59,6 +64,7 @@ export default function HabitosForm() {
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isDisabled}
         ></input>
         <HabitosButton>
           {diasDaSemana.map((dia, index) => (
@@ -72,16 +78,25 @@ export default function HabitosForm() {
                 backgroundColor: days.includes(dia) ? "#cfcfcf" : "#fff",
                 color: days.includes(dia) ? "#ffffff" : "#cfcfcf",
               }}
+              disabled={isDisabled}
             >
               {dia}
             </button>
           ))}
         </HabitosButton>
         <EnviarHabitos>
-          <button data-test="habit-create-cancel-btn" type="button">
+          <button
+            data-test="habit-create-cancel-btn"
+            type="button"
+            disabled={isDisabled}
+          >
             Cancelar
           </button>
-          <button type="submit" data-test="habit-create-save-btn">
+          <button
+            type="submit"
+            data-test="habit-create-save-btn"
+            disabled={isDisabled}
+          >
             Salvar
           </button>
         </EnviarHabitos>
