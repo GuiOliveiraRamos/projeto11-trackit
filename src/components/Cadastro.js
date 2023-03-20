@@ -4,15 +4,12 @@ import styled from "styled-components";
 import Group8 from "./assets/Group8.png";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import { UsuarioContext } from "./DataContext";
 
 export default function Cadastro() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [image, setImage] = useState(
-    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/2022.png"
-  );
+  const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
@@ -45,64 +42,60 @@ export default function Cadastro() {
   return (
     <RegisterPage>
       <img src={Group8} alt="logo" />
-      <UsuarioContext.Provider
-        value={{ email, setEmail, name, setName, image, setImage }}
-      >
-        <form onSubmit={fazerCadastro}>
-          <label htmlFor="email" />
-          <input
-            data-test="email-input"
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={isDisabled}
-          />
-          <label htmlFor="senha" />
-          <input
-            data-test="password-input"
-            type="password"
-            placeholder="senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={isDisabled}
-          />
-          <label htmlFor="nome" />
-          <input
-            data-test="user-name-input"
-            type="name"
-            placeholder="nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            disabled={isDisabled}
-          />
-          <label htmlFor="foto" />
-          <input
-            data-test="user-image-input"
-            type="url"
-            placeholder="foto"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            disabled={isDisabled}
-          />
-          <button data-test="signup-btn" type="submit" disabled={isDisabled}>
-            {isLoading ? (
-              <ThreeDots
-                height="80"
-                width="80"
-                radius="9"
-                color="#ffffff"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClassName=""
-                visible={true}
-              />
-            ) : (
-              "Cadastrar"
-            )}
-          </button>
-        </form>
-      </UsuarioContext.Provider>
+      <form onSubmit={fazerCadastro}>
+        <label htmlFor="email" />
+        <input
+          data-test="email-input"
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={isDisabled}
+        />
+        <label htmlFor="senha" />
+        <input
+          data-test="password-input"
+          type="password"
+          placeholder="senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={isDisabled}
+        />
+        <label htmlFor="nome" />
+        <input
+          data-test="user-name-input"
+          type="name"
+          placeholder="nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          disabled={isDisabled}
+        />
+        <label htmlFor="foto" />
+        <input
+          data-test="user-image-input"
+          type="url"
+          placeholder="foto"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          disabled={isDisabled}
+        />
+        <button data-test="signup-btn" type="submit" disabled={isDisabled}>
+          {isLoading ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#ffffff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            "Cadastrar"
+          )}
+        </button>
+      </form>
       <Link data-test="login-link" to="/">
         <p>Já tem uma conta? Faça login!</p>
       </Link>

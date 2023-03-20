@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import dadosContext from "../DataContext";
 
 export default function HabitosForm() {
   const diasDaSemana = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
+  const { token } = useContext(dadosContext);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

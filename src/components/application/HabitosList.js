@@ -1,15 +1,14 @@
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import dadosContext from "../DataContext";
 
 export default function HabitosList() {
   const [habitos, setHabitos] = useState([]);
+  const { token } = useContext(dadosContext);
 
   useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,7 +26,7 @@ export default function HabitosList() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [token]);
 
   function deletarHabito(habitId) {
     const confirmacao = window.confirm(
@@ -35,8 +34,6 @@ export default function HabitosList() {
     );
 
     if (confirmacao) {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -1,11 +1,14 @@
 import Group8 from "./assets/Group8.png";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import dadosContext from "./DataContext";
 
 export default function Login() {
+  const { setImage } = useContext(dadosContext);
+  const { setToken } = useContext(dadosContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +29,16 @@ export default function Login() {
     );
     request.then((response) => {
       setIsDisabled(false);
-      navigate("/hoje", { state: { dados: salvarDados } });
-      console.log(response.data);
+      navigate("/hoje", { state: { dados: response.data } });
+      setImage(response.data.image);
+      setToken(response.data.token);
+      console.log(response.data.token);
     });
     request.catch((err) => {
       setIsDisabled(false);
       window.location.reload(alert(err.response.data.message));
     });
+    console.log(salvarDados);
   };
 
   return (

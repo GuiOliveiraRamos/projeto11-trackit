@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { UsuarioContext } from "../DataContext";
+import dadosContext from "../DataContext";
 
 export default function Header() {
-  const { image } = useContext(UsuarioContext);
-
+  const { image } = useContext(dadosContext);
   return (
     <Top data-test="header">
       <Link to="/">

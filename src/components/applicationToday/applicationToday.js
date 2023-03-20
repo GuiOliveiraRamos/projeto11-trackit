@@ -2,10 +2,11 @@ import styled from "styled-components";
 import Header from "../application/Header";
 import Footer from "../application/Footer";
 import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import HabitosList from "../application/HabitosList";
 import dayjs from "dayjs";
 import axios from "axios";
+import dadosContext from "../DataContext";
 
 dayjs.locale("pt-br");
 dayjs().locale("pt-br").format("DD [de] MMMM [de] YYYY");
@@ -13,13 +14,12 @@ dayjs().locale("pt-br").format("DD [de] MMMM [de] YYYY");
 export default function ApplicationToday() {
   const [showList, setShowList] = useState(false);
   const [habitos, setHabitos] = useState([]);
+  const { token } = useContext(dadosContext);
   const mostrarLista = () => {
     setShowList(!showList);
   };
 
   useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -37,11 +37,9 @@ export default function ApplicationToday() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [token]);
 
   const marcarConcluido = (habito) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -77,8 +75,6 @@ export default function ApplicationToday() {
   };
 
   const marcarNaoConcluido = (habito) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODIxNywiaWF0IjoxNjc5MjQzNjYyfQ.Y5Ut3PbiwzmNnrl73njuwBKBdDN_XViykXtGGnBs0gA";
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -101,9 +97,11 @@ export default function ApplicationToday() {
           return h;
         });
         setHabitos(updatedHabitos);
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
+        window.location.reload();
       });
   };
 
