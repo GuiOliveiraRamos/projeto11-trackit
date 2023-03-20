@@ -22,7 +22,6 @@ export default function HabitosForm() {
       days: days
         .map((dia) => diasDaSemana.indexOf(dia))
         .filter((index) => index !== -1),
-      highestSequence: 0,
     };
 
     console.log(dadosDoHabito);
@@ -67,11 +66,11 @@ export default function HabitosForm() {
               key={index}
               data-test="habit-day"
               type="button"
-              onClick={() => selecionarDia(index)}
-              selected={days.includes(index)}
+              onClick={() => selecionarDia(dia)}
+              selected={days.includes(dia)}
               style={{
-                backgroundColor: days.includes(index) ? "#cfcfcf" : "#fff",
-                color: days.includes(index) ? "#ffffff" : "#cfcfcf",
+                backgroundColor: days.includes(dia) ? "#cfcfcf" : "#fff",
+                color: days.includes(dia) ? "#ffffff" : "#cfcfcf",
               }}
             >
               {dia}
