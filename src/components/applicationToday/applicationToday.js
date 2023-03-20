@@ -114,8 +114,8 @@ export default function ApplicationToday() {
         <h2 data-test="today">{dayjs().format("dddd, DD/MM")}</h2>
         <h3 data-test="today-counter">nenhum hábito concluido</h3>
       </ContentTitle>
-      <HabitosLista data-test="today-habit-container">
-        {habitos.map((habito) => (
+      {habitos.map((habito) => (
+        <HabitosLista data-test="today-habit-container">
           <Title key={habito.id}>
             <div>
               <h2 data-test="today-habit-name">{habito.name}</h2>
@@ -166,8 +166,9 @@ export default function ApplicationToday() {
               />
             )}
           </Title>
-        ))}
-      </HabitosLista>
+        </HabitosLista>
+      ))}
+
       {showList && <HabitosList />}
       <Footer data-test="menu" mostrarLista={mostrarLista} />
     </Body>
@@ -239,6 +240,7 @@ const Title = styled.div`
 const HabitosLista = styled.form`
   width: 355px;
   padding: 18px 0 0 15px;
+  margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 5px;
   display: flex;

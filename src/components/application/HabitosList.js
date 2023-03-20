@@ -86,6 +86,7 @@ const Title = styled.div`
 const HabitosLista = styled.form`
   width: 355px;
   padding: 18px 0 0 15px;
+  margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 5px;
   display: flex;
