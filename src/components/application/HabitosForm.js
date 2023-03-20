@@ -22,6 +22,7 @@ export default function HabitosForm() {
       days: days
         .map((dia) => diasDaSemana.indexOf(dia))
         .filter((index) => index !== -1),
+      highestSequence: 0,
     };
 
     console.log(dadosDoHabito);
@@ -36,7 +37,7 @@ export default function HabitosForm() {
         console.log(response.data);
       })
       .catch((error) => {
-        alert(JSON.stringify(error.response.data));
+        alert(error.response.data);
       });
   }
 

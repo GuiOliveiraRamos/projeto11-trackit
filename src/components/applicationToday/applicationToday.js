@@ -53,20 +53,24 @@ export default function ApplicationToday() {
       .then(() => {
         const updatedHabitos = habitos.map((h) => {
           if (h.id === habito.id) {
-            const updatedDays = [...habito.days, dayjs().format("YYYY-MM-DD")];
+            const updatedDays = Array.isArray(habito.days)
+              ? [...habito.days, dayjs().format("YYYY-MM-DD")]
+              : [dayjs().format("YYYY-MM-DD")];
+            const currentSequence = h.currentSequence || 0;
             return {
               ...habito,
               done: true,
-              currentSequence: habito.currentSequence + 1,
+              currentSequence: currentSequence + 1,
               highestSequence: Math.max(
-                habito.highestSequence,
-                habito.currentSequence + 1
+                h.highestSequence || 0,
+                currentSequence + 1
               ),
               days: updatedDays,
             };
           }
           return h;
         });
+
         setHabitos(updatedHabitos);
       })
       .catch((error) => {
@@ -97,11 +101,9 @@ export default function ApplicationToday() {
           return h;
         });
         setHabitos(updatedHabitos);
-        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
-        window.location.reload();
       });
   };
 
@@ -132,7 +134,7 @@ export default function ApplicationToday() {
                   {habito.days ? habito.days.length : 0}
                 </span>
                 <br />
-                <p data-test="today-habit-record">
+                <h4 data-test="today-habit-record">
                   {" "}
                   Seu recorde:{" "}
                   <span
@@ -147,7 +149,7 @@ export default function ApplicationToday() {
                   >
                     {habito.days ? Math.max(...habito.days) : 0}
                   </span>
-                </p>
+                </h4>
               </h3>
             </div>
             {habito.done ? (
