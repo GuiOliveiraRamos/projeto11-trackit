@@ -64,10 +64,14 @@ export default function HabitosForm() {
         <HabitosButton>
           {diasDaSemana.map((dia) => (
             <button
+              key={dia}
               data-test="habit-day"
               type="button"
-              isSelected={days.includes(dia)}
               onClick={() => selecionarDia(dia)}
+              selected={days.includes(dia)}
+              style={{
+                backgroundColor: days.includes(dia) ? "#cfcfcf" : "#fff",
+              }}
             >
               {dia}
             </button>
@@ -126,7 +130,7 @@ const HabitosButton = styled.div`
     height: 30px;
     border: 1px solid #d5d5d5;
     border-radius: 5px;
-    background-color: ${(props) => (props.isSelected ? "#CFCFCF" : "#FFFFFF")};
+    background-color: ${({ selected }) => (selected ? "#cfcfcf" : "#fff")};
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;
