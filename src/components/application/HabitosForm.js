@@ -62,15 +62,16 @@ export default function HabitosForm() {
           onChange={(e) => setName(e.target.value)}
         ></input>
         <HabitosButton>
-          {diasDaSemana.map((dia) => (
+          {diasDaSemana.map((dia, index) => (
             <button
-              key={dia}
+              key={index}
               data-test="habit-day"
               type="button"
-              onClick={() => selecionarDia(dia)}
-              selected={days.includes(dia)}
+              onClick={() => selecionarDia(index)}
+              selected={days.includes(index)}
               style={{
-                backgroundColor: days.includes(dia) ? "#cfcfcf" : "#fff",
+                backgroundColor: days.includes(index) ? "#cfcfcf" : "#fff",
+                color: days.includes(index) ? "#ffffff" : "#cfcfcf",
               }}
             >
               {dia}
