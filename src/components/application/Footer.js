@@ -5,7 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 export default function Footer({ percentHabitosConcluidos }) {
   const porcentagem = percentHabitosConcluidos;
-  console.log(porcentagem);
+
   return (
     <Bottom data-test="menu">
       <Link data-test="habit-link" to="/habitos">

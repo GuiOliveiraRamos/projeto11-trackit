@@ -8,6 +8,7 @@ export default function HabitosForm() {
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [esconderForm, setEsconderForm] = useState(true);
 
   const { token } = useContext(dadosContext);
 
@@ -38,11 +39,19 @@ export default function HabitosForm() {
       .then((response) => {
         console.log(response.data);
         setIsDisabled(true);
+        setEsconderForm(false);
       })
       .catch((error) => {
         alert(error.response.data);
         setIsDisabled(true);
+        setEsconderForm(false);
       });
+  }
+
+
+
+  if (!esconderForm) {
+    return null;
   }
 
   return (
@@ -68,6 +77,7 @@ export default function HabitosForm() {
             data-test="habit-create-cancel-btn"
             type="button"
             disabled={isDisabled}
+            onClick={() =>setEsconderForm(false)}
           >
             Cancelar
           </button>
@@ -75,6 +85,7 @@ export default function HabitosForm() {
             type="submit"
             data-test="habit-create-save-btn"
             disabled={isDisabled}
+            
           >
             Salvar
           </button>
