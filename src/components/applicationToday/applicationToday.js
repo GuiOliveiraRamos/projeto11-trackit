@@ -94,19 +94,26 @@ export default function ApplicationToday() {
       .then(() => {
         const updatedHabitos = habitos.map((h) => {
           if (h.id === habito.id) {
+            const currentSequence = h.currentSequence || 0;
             return {
               ...habito,
               done: false,
-              currentSequence: Math.max(0, habito.currentSequence - 1),
+              currentSequence: habito.currentSequence - 1,
+              highestSequence: Math.max(
+                h.highestSequence || 0,
+                currentSequence - 1
+              ),
             };
           }
           return h;
         });
         setHabitos(updatedHabitos);
+        setHabitosConcluidos(habitosConcluidos - 1);
       })
       .catch((error) => {
         console.log(error);
       });
+    console.log(habito.currentSequence);
   };
 
   return (
@@ -124,7 +131,7 @@ export default function ApplicationToday() {
             <div>
               <h2 data-test="today-habit-name">{habito.name}</h2>
               <h3 data-test="today-habit-sequence">
-                Sequência atual:{" "}
+                Sequência atual:
                 <span
                   style={{
                     color:
@@ -135,12 +142,11 @@ export default function ApplicationToday() {
                         : "#666",
                   }}
                 >
-                  {habito.days ? habito.days.length : 0}
+                  {habito.currentSequence}
                 </span>
                 <br />
                 <h4 data-test="today-habit-record">
-                  {" "}
-                  Seu recorde:{" "}
+                  Seu recorde:
                   <span
                     style={{
                       color:
@@ -151,9 +157,7 @@ export default function ApplicationToday() {
                           : "#666",
                     }}
                   >
-                    {habito.days && habito.days.length > 0
-                      ? Math.max(...habito.days)
-                      : 0}
+            {habito.highestSequence}
                   </span>
                 </h4>
               </h3>
