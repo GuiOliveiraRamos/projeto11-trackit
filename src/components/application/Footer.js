@@ -3,7 +3,9 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
 import "react-circular-progressbar/dist/styles.css";
 
-export default function Footer() {
+export default function Footer({ percentHabitosConcluidos }) {
+  const porcentagem = percentHabitosConcluidos;
+  console.log(porcentagem);
   return (
     <Bottom data-test="menu">
       <Link data-test="habit-link" to="/habitos">
@@ -12,7 +14,7 @@ export default function Footer() {
       <Link to="/hoje">
         <Progress
           data-test="today-link"
-          value={66}
+          value={porcentagem}
           text={`Hoje`}
           background
           backgroundPadding={3}

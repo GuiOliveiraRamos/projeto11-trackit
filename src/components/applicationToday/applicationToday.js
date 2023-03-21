@@ -14,6 +14,8 @@ dayjs().locale("pt-br").format("DD [de] MMMM [de] YYYY");
 export default function ApplicationToday() {
   const [showList, setShowList] = useState(false);
   const [habitos, setHabitos] = useState([]);
+  const [habitosConcluidos, setHabitosConcluidos] = useState(0);
+  const percentHabitosConcluidos = (habitosConcluidos / habitos.length) * 100;
   const { token } = useContext(dadosContext);
   const mostrarLista = () => {
     setShowList(!showList);
@@ -70,8 +72,8 @@ export default function ApplicationToday() {
           }
           return h;
         });
-
         setHabitos(updatedHabitos);
+        setHabitosConcluidos(habitosConcluidos + 1);
       })
       .catch((error) => {
         console.log(error);
@@ -112,7 +114,9 @@ export default function ApplicationToday() {
       <Header data-test="header" />
       <ContentTitle>
         <h2 data-test="today">{dayjs().format("dddd, DD/MM")}</h2>
-        <h3 data-test="today-counter">nenhum hábito concluido</h3>
+        <h3 data-test="today-counter" style={{ color: "#8FC549" }}>
+          {percentHabitosConcluidos.toFixed(0)}% dos hábitos concluídos
+        </h3>
       </ContentTitle>
       {habitos.map((habito) => (
         <HabitosLista data-test="today-habit-container">
@@ -147,7 +151,9 @@ export default function ApplicationToday() {
                           : "#666",
                     }}
                   >
-                    {habito.days ? Math.max(...habito.days) : 0}
+                    {habito.days && habito.days.length > 0
+                      ? Math.max(...habito.days)
+                      : 0}
                   </span>
                 </h4>
               </h3>
@@ -170,7 +176,11 @@ export default function ApplicationToday() {
       ))}
 
       {showList && <HabitosList />}
-      <Footer data-test="menu" mostrarLista={mostrarLista} />
+      <Footer
+        data-test="menu"
+        mostrarLista={mostrarLista}
+        percentHabitosConcluidos={percentHabitosConcluidos}
+      />
     </Body>
   );
 }
