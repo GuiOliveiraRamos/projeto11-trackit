@@ -45,14 +45,6 @@ export default function HabitosForm() {
       });
   }
 
-  function selecionarDia(day) {
-    if (days.includes(day)) {
-      setDays(days.filter((d) => d !== day));
-    } else {
-      setDays([...days, day]);
-    }
-  }
-
   return (
     <HabitosForms data-test="habit-create-container">
       <form onSubmit={criarHabito}>
@@ -68,20 +60,7 @@ export default function HabitosForm() {
         ></input>
         <HabitosButton>
           {diasDaSemana.map((dia, index) => (
-            <button
-              key={index}
-              data-test="habit-day"
-              type="button"
-              onClick={() => selecionarDia(dia)}
-              selected={days.includes(dia)}
-              style={{
-                backgroundColor: days.includes(dia) ? "#cfcfcf" : "#fff",
-                color: days.includes(dia) ? "#ffffff" : "#cfcfcf",
-              }}
-              disabled={isDisabled}
-            >
-              {dia}
-            </button>
+            <BotaoDia dia={dia} index={index} days={days} setDays={setDays} />
           ))}
         </HabitosButton>
         <EnviarHabitos>
@@ -104,6 +83,37 @@ export default function HabitosForm() {
     </HabitosForms>
   );
 }
+
+function BotaoDia({ dia, days, index, isDisabled, setDays }) {
+  const [isSelected, setIsSelected] = useState(false);
+
+  function selecionarDia(day) {
+    isSelected ? setIsSelected(false) : setIsSelected(true);
+    if (days.includes(day)) {
+      setDays(days.filter((d) => d !== day));
+    } else {
+      setDays([...days, day]);
+    }
+  }
+
+  return (
+    <BotaoDias
+      key={index}
+      data-test="habit-day"
+      type="button"
+      onClick={() => selecionarDia(dia)}
+      isSelected={isSelected}
+      disabled={isDisabled}
+    >
+      {dia}
+    </BotaoDias>
+  );
+}
+
+const BotaoDias = styled.button`
+  background-color: ${(props) => (props.isSelected ? "#CFCFCF" : "#FFFFFF")};
+  color: ${(props) => (props.isSelected ? "#FFFFFF" : "#DBDBDB")};
+`;
 
 const HabitosForms = styled.div`
   width: 355px;
@@ -145,13 +155,11 @@ const HabitosButton = styled.div`
     height: 30px;
     border: 1px solid #d5d5d5;
     border-radius: 5px;
-    background-color: ${({ selected }) => (selected ? "#cfcfcf" : "#fff")};
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb;
     margin-right: 4px;
   }
 `;
